@@ -7,7 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ProductShellComponent } from './product-shell/product-shell.component';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductEditComponent } from './product-edit/product-edit.component';
-import { productReducer } from './state/prodcut.reducer';
+import { productReducer } from './state/product.reducer';
 
 const productRoutes: Routes = [{ path: '', component: ProductShellComponent }];
 

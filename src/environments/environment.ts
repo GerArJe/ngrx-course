@@ -2,8 +2,18 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { isDevMode } from '@angular/core';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
 export const environment = {
-  production: false
+  production: false,
+  imports: [
+    StoreDevtoolsModule.instrument({
+      name: 'APM Demo App Devtools',
+      maxAge: 25,
+      logOnly: !isDevMode(),
+    }),
+  ],
 };
 
 /*

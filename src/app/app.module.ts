@@ -17,7 +17,7 @@ import { PageNotFoundComponent } from './home/page-not-found.component';
 /* Feature Modules */
 import { UserModule } from './user/user.module';
 import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   imports: [
@@ -27,11 +27,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     UserModule,
     AppRoutingModule,
     StoreModule.forRoot({}, {}),
-    StoreDevtoolsModule.instrument({
-      name: 'APM Demo App Devtools',
-      maxAge: 25,
-      logOnly: !isDevMode(),
-    }),
+    environment.imports,
   ],
   declarations: [
     AppComponent,

@@ -13,3 +13,12 @@ export const clearCurrentProductCode = createAction(
 export const intilializeCurrentProductCode = createAction(
   '[Product] Intilialize current product'
 );
+export const loadProducts = createAction('[Product] Load');
+export const loadProductsSuccess = createAction(
+  '[Product] Load Success',
+  props<{ products: Product[] }>()
+);
+export const loadProductsFailure = createAction(
+  '[Product] Load Fail',
+  props<{ error: string }>()
+);

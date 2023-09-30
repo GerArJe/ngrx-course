@@ -21,7 +21,7 @@ import { Observable } from 'rxjs';
 export class ProductListComponent implements OnInit {
   pageTitle = 'Products';
   products$: Observable<Product[]> = new Observable<Product[]>();
-  selectedProduct$: Observable<Product | null> =
+  selectedProduct$: Observable<Product | null | undefined> =
     new Observable<Product | null>();
   displayCode$: Observable<boolean> = new Observable<boolean>();
   errorMessage$: Observable<string> = new Observable<string>();
@@ -41,10 +41,10 @@ export class ProductListComponent implements OnInit {
   }
 
   newProduct(): void {
-    this.store.dispatch(ProductActions.intilializeCurrentProductCode());
+    this.store.dispatch(ProductActions.InitializeCurrentProductCode());
   }
 
   productSelected(product: Product): void {
-    this.store.dispatch(ProductActions.setCurrentProductCode({ product }));
+    this.store.dispatch(ProductActions.setCurrentProductCode({ currentProductId: product.id }));
   }
 }

@@ -22,7 +22,7 @@ export class ProductEditComponent implements OnInit {
   displayMessage: { [key: string]: string } = {};
   private validationMessages: { [key: string]: { [key: string]: string } };
   private genericValidator: GenericValidator;
-  product$: Observable<Product | null> = new Observable<Product | null>();
+  product$: Observable<Product | null | undefined> = new Observable<Product | null | undefined>();
 
   constructor(
     private fb: FormBuilder,
@@ -70,7 +70,7 @@ export class ProductEditComponent implements OnInit {
     // TODO: Unsubscribe
     this.product$ = this.store
       .select(getCurrentProduct)
-      .pipe(tap((currentProduct) => this.displayProduct(currentProduct)));
+      .pipe(tap((currentProduct) =>  this.displayProduct(currentProduct)));
 
     // Watch for value changes for validation
     this.productForm.valueChanges.subscribe(
@@ -89,7 +89,7 @@ export class ProductEditComponent implements OnInit {
     );
   }
 
-  displayProduct(product: Product | null): void {
+  displayProduct(product: Product | null | undefined): void {
     if (product) {
       // Reset the form back to pristine
       this.productForm.reset();
@@ -144,18 +144,12 @@ export class ProductEditComponent implements OnInit {
           this.productService.createProduct(product).subscribe({
             next: (p) =>
               this.store.dispatch(
-                ProductActions.setCurrentProductCode({ product: p })
+                ProductActions.setCurrentProductCode({ currentProductId: p.id })
               ),
             error: (err) => (this.errorMessage = err),
           });
         } else {
-          this.productService.updateProduct(product).subscribe({
-            next: (p) =>
-              this.store.dispatch(
-                ProductActions.setCurrentProductCode({ product: p })
-              ),
-            error: (err) => (this.errorMessage = err),
-          });
+          this.store.dispatch(ProductActions.updateProduct({product}))
         }
       }
     }

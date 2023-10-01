@@ -11,7 +11,7 @@ import {
   getProducts,
   getShowProductCode,
 } from '../state';
-import * as ProductActions from '../../products/state/product.actions';
+import { ProductPageActions, ProductApiActions } from '../state/actions';
 
 @Component({
   templateUrl: './product-shell.component.html',
@@ -26,7 +26,7 @@ export class ProductShellComponent implements OnInit {
   constructor(private store: Store<State>) {}
 
   ngOnInit(): void {
-    this.store.dispatch(ProductActions.loadProducts());
+    this.store.dispatch(ProductPageActions.loadProducts());
     this.products$ = this.store.select(getProducts);
     this.errorMessage$ = this.store.select(getError);
     this.selectedProduct$ = this.store.select(getCurrentProduct);
@@ -34,16 +34,16 @@ export class ProductShellComponent implements OnInit {
   }
 
   checkChanged(): void {
-    this.store.dispatch(ProductActions.toggleProductCode());
+    this.store.dispatch(ProductPageActions.toggleProductCode());
   }
 
   newProduct(): void {
-    this.store.dispatch(ProductActions.InitializeCurrentProductCode());
+    this.store.dispatch(ProductPageActions.InitializeCurrentProductCode());
   }
 
   productSelected(product: Product): void {
     this.store.dispatch(
-      ProductActions.setCurrentProductCode({ currentProductId: product.id })
+      ProductPageActions.setCurrentProductCode({ currentProductId: product.id })
     );
   }
 }

@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Product } from '../product';
 import { GenericValidator } from '../../shared/generic-validator';
 import { NumberValidators } from '../../shared/number.validator';
-import * as ProductActions from '../../products/state/product.actions';
+import { ProductPageActions, ProductApiActions } from '../../products/state/actions';
 import { State, getCurrentProduct } from '../state';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
@@ -118,11 +118,11 @@ export class ProductEditComponent implements OnInit {
   deleteProduct(product: Product): void {
     if (product && product.id) {
       if (confirm(`Really delete the product: ${product.productName}?`)) {
-        this.store.dispatch(ProductActions.deleteProduct({productId: product.id}))
+        this.store.dispatch(ProductPageActions.deleteProduct({productId: product.id}))
       }
     } else {
       // No need to delete, it was never saved
-      this.store.dispatch(ProductActions.clearCurrentProductCode());
+      this.store.dispatch(ProductPageActions.clearCurrentProductCode());
     }
   }
 
@@ -135,9 +135,9 @@ export class ProductEditComponent implements OnInit {
         const product = { ...originalProduct, ...this.productForm.value };
 
         if (product.id === 0) {
-          this.store.dispatch(ProductActions.createProduct({product}))
+          this.store.dispatch(ProductPageActions.createProduct({product}))
         } else {
-          this.store.dispatch(ProductActions.updateProduct({product}))
+          this.store.dispatch(ProductPageActions.updateProduct({product}))
         }
       }
     }

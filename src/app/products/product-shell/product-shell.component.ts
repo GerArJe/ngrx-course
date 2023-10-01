@@ -10,7 +10,7 @@ import {
   getError,
   getProducts,
   getShowProductCode,
-} from '../state/product.reducer';
+} from '../state';
 import * as ProductActions from '../../products/state/product.actions';
 
 @Component({

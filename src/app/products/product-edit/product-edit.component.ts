@@ -5,7 +5,7 @@ import { Product } from '../product';
 import { GenericValidator } from '../../shared/generic-validator';
 import { NumberValidators } from '../../shared/number.validator';
 import * as ProductActions from '../../products/state/product.actions';
-import { State, getCurrentProduct } from '../state/product.reducer';
+import { State, getCurrentProduct } from '../state';
 import { Store } from '@ngrx/store';
 import { Observable, tap } from 'rxjs';
 

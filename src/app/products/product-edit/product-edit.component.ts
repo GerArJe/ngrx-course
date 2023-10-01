@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Product } from '../product';
-import { ProductService } from '../product.service';
 import { GenericValidator } from '../../shared/generic-validator';
 import { NumberValidators } from '../../shared/number.validator';
 import * as ProductActions from '../../products/state/product.actions';
@@ -26,7 +25,6 @@ export class ProductEditComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private productService: ProductService,
     private store: Store<State>
   ) {
     // Defines all of the validation messages for the form.
@@ -120,11 +118,7 @@ export class ProductEditComponent implements OnInit {
   deleteProduct(product: Product): void {
     if (product && product.id) {
       if (confirm(`Really delete the product: ${product.productName}?`)) {
-        this.productService.deleteProduct(product.id).subscribe({
-          next: () =>
-            this.store.dispatch(ProductActions.clearCurrentProductCode()),
-          error: (err) => (this.errorMessage = err),
-        });
+        this.store.dispatch(ProductActions.deleteProduct({productId: product.id}))
       }
     } else {
       // No need to delete, it was never saved
@@ -141,13 +135,7 @@ export class ProductEditComponent implements OnInit {
         const product = { ...originalProduct, ...this.productForm.value };
 
         if (product.id === 0) {
-          this.productService.createProduct(product).subscribe({
-            next: (p) =>
-              this.store.dispatch(
-                ProductActions.setCurrentProductCode({ currentProductId: p.id })
-              ),
-            error: (err) => (this.errorMessage = err),
-          });
+          this.store.dispatch(ProductActions.createProduct({product}))
         } else {
           this.store.dispatch(ProductActions.updateProduct({product}))
         }
